@@ -19,11 +19,28 @@ const firestore = getFirestore(firebase);
 const loginUser = async (req, res, next) => {
     try{
         const data = req.body;
-        // res.send({
-        //     ok: true,
-        //     mensaje: 'Usuario Logueado.',
-        //     user: data
-        // });
+        if(req==null){
+            res.send({
+                ok: false,
+                mensaje: "req null",
+                rq: req
+            });
+        }
+        if(data==null){
+            res.send({
+                ok: false,
+                mensaje: "data null",
+                data: data
+            });
+        }
+        if(data.email==null){
+            res.send({
+                ok: false,
+                mensaje: "email null",
+                data: data,
+                email: data.email
+            });
+        }
         const userList = await getDocs(query(collection(firestore, 'users'), where('email', '==', data.email)));
         const usersArray = [];
         userList.forEach(doc => {
